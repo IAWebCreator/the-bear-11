@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the bear ($BBC) - The Defiance</title>
+    <meta name="description" content="The bear market ends here. $BBC is a symbol of defiance against market downturns.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ------------------- */
+        /* --- RESET & SETUP --- */
+        /* ------------------- */
+        :root {
+            --orange: #ff5a00;
+            --black: #0a0a0a;
+            --off-white: #f5f5f5;
+            --grey: #888;
+            --dark-grey: #1a1a1a;
+            
+            --font-heading: 'Anton', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--off-white);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* ------------------- */
+        /* --- UTILITIES --- */
+        /* ------------------- */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 100px 0;
+            border-bottom: 1px solid var(--dark-grey);
+            overflow: hidden;
+        }
+
+        .section:last-of-type {
+            border-bottom: none;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: 1px;
+            color: var(--off-white);
+        }
+
+        h1 {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        h2 .highlight {
+            color: var(--orange);
+        }
+
+        p {
+            max-width: 650px;
+            margin-bottom: 20px;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ------------------- */
+        /* --- BUTTONS & LINKS --- */
+        /* ------------------- */
+        .btn {
+            display: inline-block;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 14px 32px;
+            border: 2px solid var(--orange);
+            color: var(--orange);
+            background-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover, .btn.btn-primary {
+            background-color: var(--orange);
+            color: var(--black);
+        }
+
+        /* ------------------- */
+        /* --- HEADER & NAV --- */
+        /* ------------------- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            background-color: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--dark-grey);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: 40px;
+        }
+
+        .logo-text {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--off-white);
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--off-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--orange);
+        }
+
+        .mobile-nav-toggle {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-nav-toggle .icon-bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--off-white);
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        .mobile-nav-toggle.is-active .icon-bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .mobile-nav-toggle.is-active .icon-bar:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-nav-toggle.is-active .icon-bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 999;
+        }
+        
+        .mobile-menu.is-active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu a {
+            color: var(--off-white);
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            transition: color 0.3s;
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--orange);
+        }
+
+        /* ------------------- */
+        /* --- HERO SECTION --- */
+        /* ------------------- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px; /* Header height */
+            position: relative;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 500px;
+            margin: 30px 0 40px;
+        }
+
+        .hero-logo-bg {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 50vw;
+            max-width: 600px;
+            height: auto;
+            opacity: 0.1;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ------------------- */
+        /* --- ABOUT SECTION --- */
+        /* ------------------- */
+        #about .container {
+            text-align: center;
+        }
+        
+        #about p {
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+
+        /* ------------------- */
+        /* --- TOKENOMICS SECTION --- */
+        /* ------------------- */
+        .tokenomics-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .token-card {
+            background-color: var(--dark-grey);
+            padding: 30px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .token-card h3 {
+            color: var(--orange);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .token-card .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            word-wrap: break-word;
+        }
+        
+        .contract-address {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--grey);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .copy-btn:hover {
+            color: var(--off-white);
+        }
+        
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .copy-feedback {
+            font-size: 0.9rem;
+            color: var(--orange);
+        }
+
+        /* ------------------- */
+        /* --- HOW TO BUY SECTION --- */
+        /* ------------------- */
+        .how-to-buy-steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .step {
+            background-color: var(--dark-grey);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .step-number {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            color: var(--orange);
+            line-height: 1;
+            margin-bottom: 15px;
+        }
+        
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .step p {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 0;
+        }
+
+        /* ------------------- */
+        /* --- MANIFESTO SECTION --- */
+        /* ------------------- */
+        #manifesto .container {
+            text-align: center;
+        }
+        
+        .manifesto-text {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.4;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #ddd;
+            letter-spacing: 1px;
+        }
+        
+        .manifesto-text span {
+            color: var(--orange);
+        }
+
+        /* ------------------- */
+        /* --- FOOTER --- */
+        /* ------------------- */
+        .footer {
+            padding: 60px 0;
+            text-align: center;
+            background-color: var(--dark-grey);
+        }
+        
+        .footer-logo {
+            height: 60px;
+            width: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-text {
+            color: var(--grey);
+            font-size: 0.9rem;
+        }
+        
+        .footer-text a {
+            color: var(--orange);
+            text-decoration: none;
+        }
+
+        /* ------------------- */
+        /* --- RESPONSIVENESS --- */
+        /* ------------------- */
+        @media (min-width: 768px) {
+            .mobile-nav-toggle {
+                display: none;
+            }
+
+            .nav-links {
+                display: flex;
+            }
+
+            .hero-content {
+                max-width: 60%;
+            }
+
+            .tokenomics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .tokenomics-grid .token-card:last-child {
+                grid-column: 1 / -1;
+            }
+
+            .how-to-buy-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .how-to-buy-steps {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container nav-container">
+            <a href="#" class="logo-link">
+                <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/45b73c83-5a3b-412e-9a48-e2f73b696bde.png?" alt="the bear logo" class="logo-img">
+                <span class="logo-text">the bear</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#tokenomics">Tokenomics</a>
+                <a href="#how-to-buy">Buy</a>
+                <a href="#manifesto">Manifesto</a>
+            </nav>
+            <button class="mobile-nav-toggle" aria-label="Toggle menu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="#about">About</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a href="#how-to-buy">Buy</a>
+        <a href="#manifesto">Manifesto</a>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="fade-in">THE BEAR ENDS HERE.</h1>
+                    <p class="fade-in" style="transition-delay: 0.2s;">
+                        Markets bleed. Portfolios crumble. The bear shows no mercy. We've had enough. $BBC is our collective response. A symbol of defiance for those who refuse to hibernate.
+                    </p>
+                    <a href="#how-to-buy" class="btn btn-primary fade-in" style="transition-delay: 0.4s;">Join The Uprising</a>
+                </div>
+            </div>
+            <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/45b73c83-5a3b-412e-9a48-e2f73b696bde.png?" alt="" class="hero-logo-bg" aria-hidden="true">
+        </section>
+
+        <!-- About Section -->
+        <section class="section" id="about">
+            <div class="container">
+                <h2 class="fade-in">A SYMBOL, <span class="highlight">NOT A SAVIOR.</span></h2>
+                <p class="fade-in">
+                    Let's be clear. $BBC is not a financial plan. It won't single-handedly reverse the market. It is a statement. It's the digital embodiment of our frustration, a rallying cry against the forces that drive markets down. Every transaction is a small act of rebellion. Every holder is part of a community that stands against the downturn.
+                </p>
+                <p class="fade-in">
+                    This is for the traders, the builders, and the believers who have weathered the storms. We are turning the icon of our losses into the emblem of our resolve.
+                </p>
+            </div>
+        </section>
+
+        <!-- Tokenomics Section -->
+        <section class="section" id="tokenomics">
+            <div class="container">
+                <h2 class="fade-in">THE <span class="highlight">NUMBERS</span> OF DEFIANCE</h2>
+                <div class="tokenomics-grid">
+                    <div class="token-card fade-in">
+                        <h3>Token Name</h3>
+                        <p class="value">the bear</p>
+                    </div>
+                    <div class="token-card fade-in" style="transition-delay: 0.1s;">
+                        <h3>Token Ticker</h3>
+                        <p class="value">$BBC</p>
+                    </div>
+                    <div class="token-card fade-in" style="transition-delay: 0.2s;">
+                        <h3>Total Supply</h3>
+                        <p class="value">1,000,000,000</p>
+                    </div>
+                    <div class="token-card fade-in" style="transition-delay: 0.3s;">
+                        <h3>Network</h3>
+                        <p class="value">Ethereum</p>
+                    </div>
+                    <div class="token-card fade-in" style="transition-delay: 0.4s;">
+                        <h3>Contract Address</h3>
+                        <div class="contract-address">
+                            <span class="value" id="contractAddress">0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41</span>
+                            <button class="copy-btn" id="copyButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                                <span id="copyButtonText">Copy</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Buy Section -->
+        <section class="section" id="how-to-buy">
+            <div class="container">
+                <h2 class="fade-in">HOW TO <span class="highlight">FIGHT BACK</span></h2>
+                <div class="how-to-buy-steps">
+                    <div class="step fade-in">
+                        <div class="step-number">1</div>
+                        <h3>Get a Wallet</h3>
+                        <p>Download MetaMask or your wallet of choice from the app store or google chrome extension store for free.</p>
+                    </div>
+                    <div class="step fade-in" style="transition-delay: 0.1s;">
+                        <div class="step-number">2</div>
+                        <h3>Get Some ETH</h3>
+                        <p>Have ETH in your wallet to swap for $BBC. If you don’t have any ETH, you can buy directly on MetaMask, transfer from another wallet, or buy on another exchange and send it to your wallet.</p>
+                    </div>
+                    <div class="step fade-in" style="transition-delay: 0.2s;">
+                        <div class="step-number">3</div>
+                        <h3>Go to Uniswap</h3>
+                        <p>Connect to Uniswap. Go to app.uniswap.org in your browser or within your MetaMask app's browser. Connect your wallet.</p>
+                    </div>
+                    <div class="step fade-in" style="transition-delay: 0.3s;">
+                        <div class="step-number">4</div>
+                        <h3>Swap for $BBC</h3>
+                        <p>Paste the $BBC token address, select $BBC, and confirm. When MetaMask prompts you for a wallet signature, sign.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Manifesto Section -->
+        <section class="section" id="manifesto">
+            <div class="container">
+                <h2 class="fade-in">OUR <span class="highlight">MANIFESTO</span></h2>
+                <p class="manifesto-text fade-in">
+                    Our roadmap is not a list of promises. It is a single, unwavering principle: <span>Defy.</span> We will not be shaken by red candles. We will not be silenced by fear. We are the market's stubborn refusal to die. <span>We are the bear.</span>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <img src="https://yoahusjzxyasdporfmmt.supabase.co/storage/v1/object/public/token-logos/45b73c83-5a3b-412e-9a48-e2f73b696bde.png?" alt="the bear logo" class="footer-logo">
+            <p class="footer-text">$BBC is a meme coin with no intrinsic value or expectation of financial return. It is a symbol of community defiance. Do your own research.</p>
+            <p class="footer-text">&copy; 2024 the bear. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- Mobile Menu Toggle ---
+            const menuToggle = document.querySelector('.mobile-nav-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const body = document.body;
+
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('is-active');
+                mobileMenu.classList.toggle('is-active');
+                body.style.overflow = mobileMenu.classList.contains('is-active') ? 'hidden' : '';
+            });
+
+            // Close menu when a link is clicked
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('is-active');
+                    mobileMenu.classList.remove('is-active');
+                    body.style.overflow = '';
+                });
+            });
+
+            // --- Contract Address Copy ---
+            const copyButton = document.getElementById('copyButton');
+            const contractAddress = document.getElementById('contractAddress').innerText;
+            const copyButtonText = document.getElementById('copyButtonText');
+
+            copyButton.addEventListener('click', () => {
+                navigator.clipboard.writeText(contractAddress).then(() => {
+                    copyButtonText.textContent = 'Copied!';
+                    copyButton.style.color = 'var(--orange)';
+                    setTimeout(() => {
+                        copyButtonText.textContent = 'Copy';
+                        copyButton.style.color = 'var(--grey)';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    copyButtonText.textContent = 'Failed';
+                     setTimeout(() => {
+                        copyButtonText.textContent = 'Copy';
+                    }, 2000);
+                });
+            });
+
+            // --- Fade-in on Scroll Animation ---
+            const faders = document.querySelectorAll('.fade-in');
+            const appearOptions = {
+                threshold: 0.2,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('visible');
+                        appearOnScroll.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+
+        });
+    </script>
+
+</body>
+</html>
